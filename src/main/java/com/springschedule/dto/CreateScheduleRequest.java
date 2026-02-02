@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ScheduleCreateRequest {
+public class CreateScheduleRequest {
 
     private String title;
     private String content;
