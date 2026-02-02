@@ -1,7 +1,8 @@
 package com.springschedule.service;
 
+import com.springschedule.dto.CreateScheduleRequest;
 import com.springschedule.dto.CreateScheduleResponse;
-import com.springschedule.dto.ScheduleCreateRequest;
+import com.springschedule.dto.GetScheduleResponse;
 import com.springschedule.entity.Schedule;
 import com.springschedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     @Transactional
-    public CreateScheduleResponse save(ScheduleCreateRequest request) {
+    public CreateScheduleResponse save(CreateScheduleRequest request) {
 
         Schedule schedule = new Schedule(
                 request.getTitle(),
@@ -34,6 +35,22 @@ public class ScheduleService {
                 saved.getAuthorName(),
                 saved.getCreatedAt(),
                 saved.getModifiedAt()
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public GetScheduleResponse findOne(Long scheduleId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalStateException("일정이 없는데요?")
+        );
+
+        return new GetScheduleResponse(
+                schedule.getId(),
+                schedule.getTitle(),
+                schedule.getContent(),
+                schedule.getAuthorName(),
+                schedule.getCreatedAt(),
+                schedule.getModifiedAt()
         );
     }
 
