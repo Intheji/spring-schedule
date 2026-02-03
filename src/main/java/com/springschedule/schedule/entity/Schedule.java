@@ -1,4 +1,4 @@
-package com.springschedule.entity;
+package com.springschedule.schedule.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

@@ -1,8 +1,8 @@
-package com.springschedule.service;
+package com.springschedule.schedule.service;
 
-import com.springschedule.dto.*;
-import com.springschedule.entity.Schedule;
-import com.springschedule.repository.ScheduleRepository;
+import com.springschedule.schedule.dto.*;
+import com.springschedule.schedule.entity.Schedule;
+import com.springschedule.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

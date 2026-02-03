@@ -1,7 +1,7 @@
-package com.springschedule.controller;
+package com.springschedule.schedule.controller;
 
-import com.springschedule.dto.*;
-import com.springschedule.service.ScheduleService;
+import com.springschedule.schedule.dto.*;
+import com.springschedule.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +38,12 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.update(scheduleId, request));
     }
 
-
+    @DeleteMapping("/schedules/{scheduleId}")
+    public ResponseEntity<Void> deleteSchedule(
+            @PathVariable Long scheduleId,
+            @RequestBody DeleteScheduleRequest request
+    ) {scheduleService.delete(scheduleId, request);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }
