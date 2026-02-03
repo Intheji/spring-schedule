@@ -1,4 +1,4 @@
-package com.springschedule.schedule.entity;
+package com.springschedule.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
