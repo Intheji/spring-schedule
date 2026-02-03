@@ -1,0 +1,13 @@
+package com.springschedule.dto;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+public class UpdateScheduleRequest {
+
+    private String title;
+    private String authorName;
+    private String password;
+}
