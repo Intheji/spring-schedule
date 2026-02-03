@@ -96,4 +96,18 @@ public class ScheduleService {
 
         return new UpdateScheduleResponse(schedule.getId());
     }
+
+    @Transactional
+    public void delete(Long scheduleId, DeleteScheduleRequest request) {
+
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalStateException("일정이 없는데용?")
+        );
+
+        if(!schedule.getPassword().equals(request.getPassword())) {
+            throw new IllegalArgumentException("님 비밀번호 틀렸음");
+        }
+
+        scheduleRepository.delete(schedule);
+    }
 }
