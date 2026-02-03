@@ -1,5 +1,6 @@
 package com.springschedule.schedule.entity;
 
+import com.springschedule.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
