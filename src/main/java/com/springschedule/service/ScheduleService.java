@@ -1,8 +1,6 @@
 package com.springschedule.service;
 
-import com.springschedule.dto.CreateScheduleRequest;
-import com.springschedule.dto.CreateScheduleResponse;
-import com.springschedule.dto.GetScheduleResponse;
+import com.springschedule.dto.*;
 import com.springschedule.entity.Schedule;
 import com.springschedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -81,5 +79,21 @@ public class ScheduleService {
             responses.add(response);
         }
         return responses;
+    }
+
+    @Transactional
+    public UpdateScheduleResponse update(Long scheduleId, UpdateScheduleRequest request) {
+
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalStateException("일정이 없는데용?")
+        );
+
+        if (!schedule.getPassword().equals(request.getPassword())) {
+            throw new IllegalArgumentException("님 비밀번호 틀렸음");
+        }
+
+        schedule.update(request.getTitle(), request.getAuthorName());
+
+        return new UpdateScheduleResponse(schedule.getId());
     }
 }
