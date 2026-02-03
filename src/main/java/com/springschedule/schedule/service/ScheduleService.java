@@ -1,5 +1,8 @@
 package com.springschedule.schedule.service;
 
+import com.springschedule.comment.dto.GetCommentResponse;
+import com.springschedule.comment.entity.Comment;
+import com.springschedule.comment.repository.CommentRepository;
 import com.springschedule.schedule.dto.*;
 import com.springschedule.schedule.entity.Schedule;
 import com.springschedule.schedule.repository.ScheduleRepository;
@@ -16,6 +19,7 @@ import java.util.List;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
@@ -40,18 +44,33 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public GetScheduleResponse findOne(Long scheduleId) {
+    public GetScheduleAndCommentsResponse findOne(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
-                () -> new IllegalStateException("일정이 없는데요?")
+                () -> new IllegalStateException("일정이 없는데용?")
         );
 
-        return new GetScheduleResponse(
+        List<Comment> comments = commentRepository.findByScheduleIdOrderByCreatedAtAsc(scheduleId);
+
+        List<GetCommentResponse> commentDtos = new ArrayList<>();
+        for (Comment comment : comments) {
+            GetCommentResponse dto = new GetCommentResponse(
+                    comment.getId(),
+                    comment.getContent(),
+                    comment.getAuthorName(),
+                    comment.getCreatedAt(),
+                    comment.getModifiedAt()
+            );
+            commentDtos.add(dto);
+        }
+
+        return new GetScheduleAndCommentsResponse(
                 schedule.getId(),
                 schedule.getTitle(),
                 schedule.getContent(),
                 schedule.getAuthorName(),
                 schedule.getCreatedAt(),
-                schedule.getModifiedAt()
+                schedule.getModifiedAt(),
+                commentDtos
         );
     }
 
@@ -110,4 +129,6 @@ public class ScheduleService {
 
         scheduleRepository.delete(schedule);
     }
+
+
 }
