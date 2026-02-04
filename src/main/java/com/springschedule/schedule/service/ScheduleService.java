@@ -133,7 +133,14 @@ public class ScheduleService {
 
         schedule.update(request.getTitle(), request.getAuthorName());
 
-        return new UpdateScheduleResponse(schedule.getId());
+        Schedule saved = scheduleRepository.save(schedule);
+
+        return new UpdateScheduleResponse(
+                saved.getId(),
+                saved.getTitle(),
+                saved.getAuthorName(),
+                saved.getCreatedAt(),
+                saved.getModifiedAt());
     }
 
     @Transactional
