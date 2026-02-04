@@ -208,7 +208,7 @@ erDiagram
 ---
 
 ### 6.4 선택 일정 수정 (비밀번호가 필요힙니다)
-- `PATCH /schedules/{scheduleId}`
+- `PUT /schedules/{scheduleId}`
 - 수정 가능: `title`, `authorName`만 수정 가능
 - 수정 완료 시 `modifiedAt`을 갱신함
 
@@ -222,7 +222,7 @@ erDiagram
 **Request Body**
 ```json
 {
-  "title": "일정1을 변경할게요",
+  "title": "일정1 수정",
   "authorName": "박현지",
   "password": "1234"
 }
@@ -232,6 +232,10 @@ erDiagram
 ```json
 {
   "id": 1
+  "title": "일정1 수정",
+  "authorName": "박현지",
+  "createdAt": "~",
+  "modifiedAt": "~"
 }
 ```
 
