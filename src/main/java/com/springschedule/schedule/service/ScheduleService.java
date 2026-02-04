@@ -24,10 +24,11 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final CommentRepository commentRepository;
 
+    // 일정 생성
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
 
-        // 먼저 검증을 하고
+        // 요청 데이터가 비었는지 길이 제한을 넘는지 검증
         requireText(request.getTitle(), "schedule 제목");
         requireMaxLength(request.getTitle(), "schedule 제목", 30);
         requireText(request.getContent(),"schedule 내용");
@@ -35,8 +36,6 @@ public class ScheduleService {
         requireText(request.getAuthorName(), "작성자이름");
         requireText(request.getPassword(), "비밀번호");
 
-
-        // 검증을 통과하면 저장한다
         Schedule schedule = new Schedule(
                 request.getTitle(),
                 request.getContent(),
@@ -46,7 +45,7 @@ public class ScheduleService {
 
         Schedule saved = scheduleRepository.save(schedule);
 
-        // 응답을 하고 return 한다
+        // 비밀번호를 빼고 응답
         return new CreateScheduleResponse(
                 saved.getId(),
                 saved.getTitle(),
@@ -57,14 +56,19 @@ public class ScheduleService {
         );
     }
 
+    // 일정 단건 조회
     @Transactional(readOnly = true)
     public GetScheduleAndCommentsResponse findOne(Long scheduleId) {
+
+        // 값이 없으면 예외 발생
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalStateException("일정이 없는데용?")
         );
 
+        // 댓글 조회 오름차순으로 가져옴
         List<Comment> comments = commentRepository.findByScheduleIdOrderByCreatedAtAsc(scheduleId);
 
+        // 반환
         List<GetCommentResponse> commentDtos = new ArrayList<>();
         for (Comment comment : comments) {
             GetCommentResponse dto = new GetCommentResponse(
@@ -77,6 +81,7 @@ public class ScheduleService {
             commentDtos.add(dto);
         }
 
+        // 응답
         return new GetScheduleAndCommentsResponse(
                 schedule.getId(),
                 schedule.getTitle(),
@@ -88,11 +93,13 @@ public class ScheduleService {
         );
     }
 
+    // 전체 일정 조회
     @Transactional(readOnly = true)
     public List<GetScheduleResponse> findAll(String authorName) {
 
         List<Schedule> schedules;
 
+        // authorName이 공백이면 전체 조회, 아니면 작성자 조회
         if (authorName == null || authorName.isBlank()) {
             schedules = scheduleRepository.findAllByOrderByModifiedAtDesc();
         } else {
@@ -114,19 +121,23 @@ public class ScheduleService {
         return responses;
     }
 
+    // 일정 수정 (비밀번호 검증이 필요)
     @Transactional
     public UpdateScheduleResponse update(Long scheduleId, UpdateScheduleRequest request) {
 
+        // 수정 요정에서 필요한 값을 검증
         requireText(request.getPassword(), "비밀번호");
         requireText(request.getTitle(), "schedule 제목");
         requireMaxLength(request.getTitle(), "schedule 제목", 30);
         requireText(request.getAuthorName(), "작성자이름");
 
 
+        // 수정 대상 일정을 조회
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalStateException("일정이 없는데용?")
         );
 
+        // 비밀번호 검증
         if (!schedule.getPassword().equals(request.getPassword())) {
             throw new IllegalArgumentException("님 비밀번호 틀렸음");
         }
@@ -144,6 +155,7 @@ public class ScheduleService {
                 saved.getModifiedAt());
     }
 
+    // 일정 삭제 (비밀번호 검증 필요)
     @Transactional
     public void delete(Long scheduleId, DeleteScheduleRequest request) {
 
@@ -159,6 +171,4 @@ public class ScheduleService {
 
         scheduleRepository.delete(schedule);
     }
-
-
 }
