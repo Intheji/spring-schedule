@@ -31,7 +31,7 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findAll(authorName));
     }
 
-    @PutMapping("/schedules/{scheduleId}")
+    @PatchMapping("/schedules/{scheduleId}")
     public ResponseEntity<UpdateScheduleResponse> updateSchedule(
             @PathVariable Long scheduleId, @RequestBody UpdateScheduleRequest request
     ) {

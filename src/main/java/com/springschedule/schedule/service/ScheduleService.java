@@ -138,6 +138,7 @@ public class ScheduleService {
         return new UpdateScheduleResponse(
                 saved.getId(),
                 saved.getTitle(),
+                saved.getContent(),
                 saved.getAuthorName(),
                 saved.getCreatedAt(),
                 saved.getModifiedAt());
