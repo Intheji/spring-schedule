@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.springschedule.common.validation.InputValidator.requireMaxLength;
+import static com.springschedule.common.validation.InputValidator.requireText;
+
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,16 @@ public class ScheduleService {
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
 
+        // 먼저 검증을 하고
+        requireText(request.getTitle(), "schedule 제목");
+        requireMaxLength(request.getTitle(), "schedule 제목", 30);
+        requireText(request.getContent(),"schedule 내용");
+        requireMaxLength(request.getContent(), "schedule 내용", 200);
+        requireText(request.getAuthorName(), "작성자이름");
+        requireText(request.getPassword(), "비밀번호");
+
+
+        // 검증을 통과하면 저장한다
         Schedule schedule = new Schedule(
                 request.getTitle(),
                 request.getContent(),
@@ -33,6 +46,7 @@ public class ScheduleService {
 
         Schedule saved = scheduleRepository.save(schedule);
 
+        // 응답을 하고 return 한다
         return new CreateScheduleResponse(
                 saved.getId(),
                 saved.getTitle(),
@@ -103,6 +117,12 @@ public class ScheduleService {
     @Transactional
     public UpdateScheduleResponse update(Long scheduleId, UpdateScheduleRequest request) {
 
+        requireText(request.getPassword(), "비밀번호");
+        requireText(request.getTitle(), "schedule 제목");
+        requireMaxLength(request.getTitle(), "schedule 제목", 30);
+        requireText(request.getAuthorName(), "작성자이름");
+
+
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalStateException("일정이 없는데용?")
         );
@@ -118,6 +138,8 @@ public class ScheduleService {
 
     @Transactional
     public void delete(Long scheduleId, DeleteScheduleRequest request) {
+
+        requireText(request.getPassword(), "비밀번호");
 
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalStateException("일정이 없는데용?")
