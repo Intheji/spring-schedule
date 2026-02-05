@@ -51,7 +51,6 @@ public class CommentService {
                 savedComment.getId(),
                 savedComment.getContent(),
                 savedComment.getAuthorName(),
-                savedComment.getScheduleId(),
                 savedComment.getCreatedAt(),
                 savedComment.getModifiedAt()
         );
