@@ -6,19 +6,17 @@ import com.springschedule.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/schedules/{scheduleId}/comments")
 public class CommentController {
 
     private final CommentService commentService;
 
     // 댓글 생성
-    @PostMapping("/schedules/{scheduleId}/comments")
+    @PostMapping
     public ResponseEntity<CreateCommentResponse> create(
             @PathVariable Long scheduleId,
             @RequestBody CreateCommentRequest request
