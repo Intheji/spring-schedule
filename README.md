@@ -233,7 +233,7 @@ erDiagram
 {
   "id": 1
   "title": "일정1 수정",
-  "content": "내용1"
+  "content": "내용1",
   "authorName": "박현지",
   "createdAt": "~",
   "modifiedAt": "~"
