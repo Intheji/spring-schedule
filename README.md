@@ -131,8 +131,8 @@ erDiagram
   "title": "일정1",
   "content": "내용1",
   "authorName": "박현지",
-  "createdAt": "~",
-  "modifiedAt": "~"
+  "createdAt": "0000-00-00T00:00:00",
+  "modifiedAt": "0000-00-00T00:00:00"
 }
 ```
 
@@ -160,16 +160,16 @@ erDiagram
     "title": "일정2",
     "content": "내용2",
     "authorName": "박현지",
-    "createdAt": "~",
-    "modifiedAt": "~"
+    "createdAt": "0000-00-00T00:00:00",
+    "modifiedAt": "0000-00-00T00:00:00"
   },
   {
     "id": 1,
     "title": "일정1",
     "content": "내용1",
     "authorName": "박현지",
-    "createdAt": "~",
-    "modifiedAt": "~"
+    "createdAt": "0000-00-00T00:00:00",
+    "modifiedAt": "0000-00-00T00:00:00"
   }
 ]
 ```
@@ -192,15 +192,15 @@ erDiagram
   "title": "일정1",
   "content": "내용1",
   "authorName": "박현지",
-  "createdAt": "~",
-  "modifiedAt": "~",
+  "createdAt": "0000-00-00T00:00:00",
+  "modifiedAt": "0000-00-00T00:00:00",
   "comments": [
     {
       "id": 1,
       "content": "제목이 성의 없게 일정1이 뭔가요",
       "authorName": "박현지",
-      "createdAt": "~",
-      "modifiedAt": "~"
+      "createdAt": "0000-00-00T00:00:00",
+      "modifiedAt": "0000-00-00T00:00:00"
     }
   ]
 }
@@ -235,8 +235,8 @@ erDiagram
   "title": "일정1 수정",
   "content": "내용1",
   "authorName": "박현지",
-  "createdAt": "~",
-  "modifiedAt": "~"
+  "createdAt": "0000-00-00T00:00:00",
+  "modifiedAt": "0000-00-00T00:00:00"
 }
 ```
 
@@ -291,8 +291,8 @@ erDiagram
   "id": 1,
   "content": "제목이 성의 없게 일정1이 뭔가요",
   "authorName": "박현지",
-  "createdAt": "~",
-  "modifiedAt": "~"
+  "createdAt": "0000-00-00T00:00:00",
+  "modifiedAt": "0000-00-00T00:00:00"
 }
 ```
 
